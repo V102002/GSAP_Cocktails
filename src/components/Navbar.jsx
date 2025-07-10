@@ -1,6 +1,8 @@
 import React from 'react'
 import { navLink } from '../../constants'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import gsap from 'gsap'
 
 const Navbar = () => {
     useGSAP(()=>{
@@ -12,11 +14,11 @@ const Navbar = () => {
             }
         });
 
-        navTween.fromTo('nav',{backgroundColor:'transparent'} ,{
-            backgroundColor:'#00000050',
-            backgroundFilter:'blur(10)',
-            duration:1,
-            ease:'power1.inOut'
+        navTween.fromTo('nav', { backgroundColor: 'transparent' }, {
+        backgroundColor: '#00000050',
+        css: { 'backdrop-filter': 'blur(10px)' },
+        duration: 1,
+        ease: 'power1.inOut'
         });
     })
   return (
