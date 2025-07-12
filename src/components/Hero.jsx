@@ -11,61 +11,70 @@ const Hero = () => {
     const isMobile=useMediaQuery({maxWidth:767});
 
 
-    useGSAP(()=>{
-        const heroSplit=new SplitText('.title',{type:'chars,words'});
-        const paragraphSplit=new SplitText('.subtitle',{type:'lines'});
+        useGSAP(() => {
+        const heroSplit = new SplitText('.title', { type: 'chars,words' });
+        const paragraphSplit = new SplitText('.subtitle', { type: 'lines' });
 
-        heroSplit.chars.forEach((char)=>char.classList.add('text-gradient'));
+        heroSplit.chars.forEach((char) => char.classList.add('text-gradient'));
 
-        //Animating the characters
-        gsap.from(heroSplit.chars,{
-            yPercent:100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.06
-        })
+        gsap.from(heroSplit.chars, {
+            yPercent: 100,
+            duration: 1.8,
+            ease: 'expo.out',
+            stagger: 0.06,
+        });
 
-        //Animating the paragraphs
-        gsap.from(paragraphSplit.lines,{
-            opacity:0,
-            yPercent:100,
-            duration:1.8,
-            ease:'expo.out',
-            stagger:0.06,
-            delay:1,
+        gsap.from(paragraphSplit.lines, {
+            opacity: 0,
+            yPercent: 100,
+            duration: 1.8,
+            ease: 'expo.out',
+            stagger: 0.06,
+            delay: 1,
         });
 
         gsap.timeline({
-            scrollTrigger:{
-                trigger:'video',
-                start:'top top',
-                end:'bottom top',
-                scrub:true,
-            }
+            scrollTrigger: {
+                trigger: 'video',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            },
         })
-        .to('.right-leaf',{y:200},0)
-        .to('.left-leaf',{y:-200},0)
+        .to('.right-leaf', { y: 200 }, 0)
+        .to('.left-leaf', { y: -200 }, 0);
 
-        const startValue= isMobile ? 'top 50%' : 'center 60%';
-        const endValue= isMobile? '120% top' :'bottom top';
+        const startValue = isMobile ? 'top 50%' : 'center 60%';
+        const endValue = isMobile ? '120% top' : 'bottom top';
 
-        //Video animation timeline
-        let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: "video",
-            start: startValue,
-            end: endValue,
-            scrub: true,
-            pin: true,
-        },
+        const video = videoRef.current;
+        if (!video) return;
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: video,
+                start: startValue,
+                end: endValue,
+                scrub: true,
+                pin: true,
+            },
         });
-        
-        videoRef.current.onloadedmetadata = () => {
-            tl.to(videoRef.current, {
-                currentTime: videoRef.current.duration,
+
+        const handleLoadedMetadata = () => {
+            tl.to(video, {
+                currentTime: video.duration,
+                ease: 'none',
             });
         };
-    },[]);//Only run when the website loads
+
+        video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+        // Cleanup listener on unmount
+        return () => {
+            video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        };
+    }, []);
+    //Only run when the website loads
 
 
 
