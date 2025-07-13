@@ -38,8 +38,8 @@ const Menu = () => {
 
   return (
     <section id='menu' aria-labelledby='menu-heading'> {/*The user can swap between different section within this menu */}
-      <img src="/images/slider-left-leaf.png" alt="left-leaf" id='m-left-leaf' />
-      <img src="/images/slider-right-leaf.png" alt="right-leaf" id='m-right-leaf' />
+      <img src={`${import.meta.env.BASE_URL}images/slider-left-leaf.png`} alt="left-leaf" id='m-left-leaf' />
+      <img src={`${import.meta.env.BASE_URL}images/slider-right-leaf.png`} alt="right-leaf" id='m-right-leaf' />
 
       <h2 id='menu-heading' className='sr-only'>
         Cocktail Menu
@@ -60,12 +60,12 @@ const Menu = () => {
         <div className="arrows">
           <button className='text-left' onClick={()=>gotoSlide(currentIndex-1)}>
             <span>{prevCocktail.name}</span>
-            <img src="/images/right-arrow.png" alt="right-arrow" aria-hidden='true' />
+            <img src={`${import.meta.env.BASE_URL}images/right-arrow.png`} alt="right-arrow" aria-hidden='true' />
           </button>
 
           <button className='text-right' onClick={()=>gotoSlide(currentIndex+1)}>
             <span>{nextCocktail.name}</span>
-            <img src="/images/left-arrow.png" alt="left-arrow" aria-hidden='true' />
+            <img src={`${import.meta.env.BASE_URL}images/left-arrow.png`} alt="left-arrow" aria-hidden='true' />
           </button> 
         </div>
         <div className="cocktail">

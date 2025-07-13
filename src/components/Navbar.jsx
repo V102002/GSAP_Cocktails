@@ -2,8 +2,9 @@ import React from 'react'
 import { navLink } from '../../constants'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import CSSPlugin from 'gsap/CSSPlugin'
 import gsap from 'gsap'
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger,CSSPlugin);
 const Navbar = () => {
     useGSAP(()=>{
         const navTween=gsap.timeline({
@@ -25,7 +26,7 @@ const Navbar = () => {
     <nav>
         <div>
             <a href="#home" className='flex items-center gap-2'>
-                <img src="/images/logo.png" alt="logo" />
+                <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="logo" />
                 <p>Velvet Pour</p>
             </a>
             <ul>
